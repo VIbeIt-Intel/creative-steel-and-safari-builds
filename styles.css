@@ -32,6 +32,7 @@
 html {
   scroll-behavior: smooth;
   overflow-x: clip;
+  scroll-padding-bottom: 5rem;
 }
 
 body {
@@ -81,6 +82,7 @@ a {
 
 .brand span {
   min-width: 0;
+  font-size: 0.92rem;
 }
 
 .brand img {
@@ -89,6 +91,7 @@ a {
   object-fit: cover;
   border-radius: 50%;
   background: var(--paper);
+  flex-shrink: 0;
 }
 
 .top nav {
@@ -102,6 +105,10 @@ a {
   color: var(--muted);
 }
 
+.top nav a:hover {
+  color: var(--accent);
+}
+
 .cta {
   display: inline-flex;
   align-items: center;
@@ -112,29 +119,63 @@ a {
   color: var(--on-accent);
   background: var(--accent);
   font-weight: 700;
+  white-space: normal;
+  text-align: center;
+}
+
+.cta-ghost {
+  color: var(--ink);
+  background: transparent;
+  border: 2px solid color-mix(in srgb, var(--ink) 35%, transparent);
+}
+
+.hero .cta-ghost {
+  color: #f7f4ef;
+  border-color: rgb(247 244 239 / 45%);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 0.35rem;
 }
 
 main {
   width: min(1120px, calc(100% - 2rem));
   margin: 0 auto;
   padding: 0 0 3rem;
+  display: flex;
+  flex-direction: column;
 }
 
 section {
   padding: 2.6rem 0;
 }
 
+.section-head {
+  margin-bottom: 1.4rem;
+}
+
+.section-head p {
+  max-width: 38rem;
+  color: var(--muted);
+  font-size: 1.02rem;
+  margin-top: 0.35rem;
+}
+
 .hero {
-  min-height: 86vh;
+  order: 1;
+  min-height: 88vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   gap: 0.7rem;
   margin-inline: calc(50% - 50vw);
-  padding: 6rem 1.2rem 2.2rem;
+  padding: 6rem 1.2rem 2.4rem;
   color: #f7f4ef;
   background:
-    linear-gradient(to top, rgb(0 0 0 / 78%), rgb(0 0 0 / 18%)),
+    linear-gradient(to top, rgb(0 0 0 / 82%), rgb(0 0 0 / 22%) 55%, rgb(0 0 0 / 10%)),
     var(--hero) center / cover no-repeat;
 }
 
@@ -158,17 +199,17 @@ section {
 }
 
 h1 {
-  max-width: 16ch;
+  max-width: 14ch;
   font-family: var(--display);
-  font-size: clamp(2.4rem, 8vw, 5.4rem);
+  font-size: clamp(2.2rem, 7.5vw, 5rem);
   font-weight: 650;
   letter-spacing: -0.045em;
   line-height: 0.95;
 }
 
 .lede,
-#about p,
-#contact p,
+.workshop-copy,
+.contact-block p,
 .hours,
 #products > p {
   max-width: 38rem;
@@ -188,7 +229,6 @@ h1 {
 }
 
 h2 {
-  margin-bottom: 1rem;
   font-family: var(--display);
   font-size: clamp(1.6rem, 3vw, 2.4rem);
   letter-spacing: -0.04em;
@@ -203,29 +243,58 @@ h2 {
 
 .cards li {
   padding: 1.05rem 1.1rem;
-  border-radius: 1rem;
+  border-radius: 0.35rem;
   background: color-mix(in srgb, var(--ink) 6%, var(--paper));
+  border-left: 3px solid var(--accent);
 }
 
 .cards h3 {
+  font-family: var(--display);
   font-size: 1.05rem;
   letter-spacing: -0.03em;
+  margin-bottom: 0.25rem;
+}
+
+.cards p {
+  color: var(--muted);
+  font-size: 0.92rem;
 }
 
 .cards p:empty {
   display: none;
 }
 
+#gallery {
+  order: 2;
+}
+
+.look-maker #gallery {
+  width: 100vw;
+  max-width: 100vw;
+  margin-inline: calc(50% - 50vw);
+  padding-inline: 0;
+}
+
+.look-maker #gallery .section-head {
+  padding-inline: max(1rem, calc((100vw - 1120px) / 2 + 1rem));
+}
+
 .jobs {
   display: grid;
-  gap: 1.6rem;
+  gap: 0;
+}
+
+.job {
+  border-top: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
 }
 
 .job h3 {
-  margin: 0 0 0.45rem;
+  margin: 0;
+  padding: 1.1rem max(1rem, calc((100vw - 1120px) / 2 + 1rem)) 0.5rem;
   font-family: var(--display), sans-serif;
-  font-size: 1.35rem;
+  font-size: clamp(1.15rem, 3vw, 1.45rem);
   letter-spacing: -0.03em;
+  text-transform: uppercase;
 }
 
 .job h3:empty,
@@ -234,7 +303,8 @@ h2 {
 }
 
 .job-note {
-  margin: 0.45rem 0 0;
+  margin: 0;
+  padding: 0 max(1rem, calc((100vw - 1120px) / 2 + 1rem)) 0.85rem;
   color: var(--muted);
   font-size: 0.92rem;
 }
@@ -242,7 +312,7 @@ h2 {
 .job-photos {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.4rem;
+  gap: 2px;
 }
 
 .job-photos figure {
@@ -253,7 +323,7 @@ h2 {
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
-  border-radius: 0.2rem;
+  border-radius: 0;
   background: color-mix(in srgb, var(--ink) 8%, var(--paper));
 }
 
@@ -263,7 +333,76 @@ h2 {
 }
 
 .job-photos figure:only-child img {
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 9;
+}
+
+#products {
+  order: 3;
+}
+
+#workshop {
+  order: 4;
+}
+
+#about {
+  order: 5;
+}
+
+#bookings {
+  order: 6;
+}
+
+#contact {
+  order: 7;
+  padding-bottom: 1rem;
+}
+
+.workshop-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1.2rem;
+}
+
+.workshop-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 1rem;
+  border-radius: 0.35rem;
+  background: color-mix(in srgb, var(--ink) 6%, var(--paper));
+  border-top: 3px solid var(--accent);
+}
+
+.stat-num {
+  font-family: var(--display);
+  font-size: clamp(1.4rem, 4vw, 1.8rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--accent);
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.workshop-copy {
+  margin-top: 0.5rem;
+}
+
+.contact-block {
+  font-style: normal;
+  margin-bottom: 1rem;
+}
+
+.contact-block p {
+  margin-bottom: 0.35rem;
+}
+
+.contact-block a {
+  color: var(--accent);
+  font-weight: 600;
 }
 
 .look-food #services {
@@ -290,39 +429,6 @@ h2 {
   order: 4;
 }
 
-main {
-  display: flex;
-  flex-direction: column;
-}
-
-.hero {
-  order: 1;
-}
-
-#gallery {
-  order: 2;
-}
-
-#services {
-  order: 3;
-}
-
-#products {
-  order: 4;
-}
-
-#about {
-  order: 5;
-}
-
-#bookings {
-  order: 6;
-}
-
-#contact {
-  order: 7;
-}
-
 .pack-entry .bookings,
 .pack-entry nav a[href="#bookings"] {
   display: none;
@@ -339,25 +445,38 @@ main {
 }
 
 footer {
-  padding: 1.2rem 1.1rem 5.5rem;
+  padding: 1.2rem 1.1rem 6rem;
   color: var(--muted);
   text-align: center;
+  font-size: 0.88rem;
 }
 
 .wa {
   position: fixed;
   right: 1rem;
   bottom: 1rem;
+  z-index: 20;
   min-height: 44px;
   padding: 0.75rem 1rem;
   border-radius: 999px;
   color: #fff;
   background: #128c7e;
   font-weight: 700;
+  box-shadow: 0 4px 16px rgb(0 0 0 / 35%);
 }
 
 .wa[hidden] {
   display: none;
+}
+
+@media (max-width: 520px) {
+  .workshop-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .brand span {
+    font-size: 0.82rem;
+  }
 }
 
 @media (min-width: 800px) {
@@ -376,5 +495,16 @@ footer {
   .job-photos figure:only-child,
   .job-photos figure:first-child:nth-last-child(n + 3) {
     grid-column: 1 / -1;
+  }
+
+  .cards li:last-child:nth-child(3n + 2) {
+    grid-column: span 1;
+  }
+}
+
+@media (min-width: 800px) {
+  .cards li:nth-child(4),
+  .cards li:nth-child(5) {
+    grid-column: span 1;
   }
 }
