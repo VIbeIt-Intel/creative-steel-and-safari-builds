@@ -7,5 +7,6 @@ Before the pull request:
 3. Run `node mobile-check.mjs` until it prints PASS.
 
 Result:
-- Script: not run yet
-- Look at 360px and 390px: not done
+- Script: PASS
+- Look at 360px and 390px: PASS
+- Fixed: grouped job photos into full-bleed grid with `margin-inline: calc(50% - 50vw)` on `.job`; added `hero-actions` flex wrap for dual Call/WhatsApp buttons; ensured footer has 5.5rem bottom padding so fixed WhatsApp button clears contact text; added `loading="lazy"` on gallery images.
