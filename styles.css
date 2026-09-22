@@ -1,0 +1,380 @@
+:root {
+  --c1: #fd6805;
+  --c2: #ffffff;
+  --c3: #000000;
+  --seed-ink: #000000;
+  --seed-paper: #ffffff;
+  --ink: var(--seed-ink);
+  --paper: var(--seed-paper);
+  --accent: #fd6805;
+  --on-accent: #ffffff;
+  --display: "Oswald", "Segoe UI", sans-serif;
+  --text: "Figtree", "Segoe UI", sans-serif;
+  --muted: color-mix(in srgb, var(--ink) 68%, transparent);
+}
+
+.look-maker,
+.look-workshop,
+.look-barber,
+.look-showcase,
+.look-fitness {
+  --ink: var(--seed-paper);
+  --paper: var(--seed-ink);
+  --muted: color-mix(in srgb, var(--ink) 74%, transparent);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: clip;
+}
+
+body {
+  font-family: var(--text);
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+img,
+svg,
+video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.top {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  padding: 0.75rem 1.1rem;
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-width: 0;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.brand span {
+  min-width: 0;
+}
+
+.brand img {
+  width: 2.4rem;
+  height: 2.4rem;
+  object-fit: cover;
+  border-radius: 50%;
+  background: var(--paper);
+}
+
+.top nav {
+  display: none;
+  gap: 1rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.top nav a {
+  color: var(--muted);
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.72rem 1.1rem;
+  border-radius: 999px;
+  color: var(--on-accent);
+  background: var(--accent);
+  font-weight: 700;
+}
+
+main {
+  width: min(1120px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 0 0 3rem;
+}
+
+section {
+  padding: 2.6rem 0;
+}
+
+.hero {
+  min-height: 86vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.7rem;
+  margin-inline: calc(50% - 50vw);
+  padding: 6rem 1.2rem 2.2rem;
+  color: #f7f4ef;
+  background:
+    linear-gradient(to top, rgb(0 0 0 / 78%), rgb(0 0 0 / 18%)),
+    var(--hero) center / cover no-repeat;
+}
+
+.look-trade .hero,
+.look-trust .hero,
+.look-clean .hero,
+.look-studio .hero {
+  min-height: 0;
+  margin-inline: 0;
+  padding: 3.2rem 0 1rem;
+  color: var(--ink);
+  background: none;
+}
+
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+h1 {
+  max-width: 16ch;
+  font-family: var(--display);
+  font-size: clamp(2.4rem, 8vw, 5.4rem);
+  font-weight: 650;
+  letter-spacing: -0.045em;
+  line-height: 0.95;
+}
+
+.lede,
+#about p,
+#contact p,
+.hours,
+#products > p {
+  max-width: 38rem;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.hero .lede {
+  color: rgb(247 244 239 / 82%);
+}
+
+.look-trade .hero .lede,
+.look-trust .hero .lede,
+.look-clean .hero .lede,
+.look-studio .hero .lede {
+  color: var(--muted);
+}
+
+h2 {
+  margin-bottom: 1rem;
+  font-family: var(--display);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.cards {
+  display: grid;
+  gap: 0.75rem;
+  list-style: none;
+}
+
+.cards li {
+  padding: 1.05rem 1.1rem;
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--ink) 6%, var(--paper));
+}
+
+.cards h3 {
+  font-size: 1.05rem;
+  letter-spacing: -0.03em;
+}
+
+.cards p:empty {
+  display: none;
+}
+
+.jobs {
+  display: grid;
+  gap: 1.6rem;
+}
+
+.job h3 {
+  margin: 0 0 0.45rem;
+  font-family: var(--display), sans-serif;
+  font-size: 1.35rem;
+  letter-spacing: -0.03em;
+}
+
+.job h3:empty,
+.job-note:empty {
+  display: none;
+}
+
+.job-note {
+  margin: 0.45rem 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.job-photos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+}
+
+.job-photos figure {
+  margin: 0;
+}
+
+.job-photos img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 0.2rem;
+  background: color-mix(in srgb, var(--ink) 8%, var(--paper));
+}
+
+.job-photos figure:only-child,
+.job-photos figure:first-child:nth-last-child(n + 3) {
+  grid-column: 1 / -1;
+}
+
+.job-photos figure:only-child img {
+  aspect-ratio: 16 / 10;
+}
+
+.look-food #services {
+  order: 2;
+}
+
+.look-food #gallery {
+  order: 3;
+}
+
+.look-trust #about,
+.look-clean #about {
+  order: 2;
+}
+
+.look-trust #services,
+.look-clean #services {
+  order: 3;
+}
+
+.look-trust #gallery,
+.look-clean #gallery,
+.look-trade #gallery {
+  order: 4;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero {
+  order: 1;
+}
+
+#gallery {
+  order: 2;
+}
+
+#services {
+  order: 3;
+}
+
+#products {
+  order: 4;
+}
+
+#about {
+  order: 5;
+}
+
+#bookings {
+  order: 6;
+}
+
+#contact {
+  order: 7;
+}
+
+.pack-entry .bookings,
+.pack-entry nav a[href="#bookings"] {
+  display: none;
+}
+
+.no-shop #products,
+.no-shop nav a[href="#products"] {
+  display: none;
+}
+
+.no-services #services,
+.no-services nav a[href="#services"] {
+  display: none;
+}
+
+footer {
+  padding: 1.2rem 1.1rem 5.5rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+.wa {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  min-height: 44px;
+  padding: 0.75rem 1rem;
+  border-radius: 999px;
+  color: #fff;
+  background: #128c7e;
+  font-weight: 700;
+}
+
+.wa[hidden] {
+  display: none;
+}
+
+@media (min-width: 800px) {
+  .top nav {
+    display: flex;
+  }
+
+  .cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .job-photos {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .job-photos figure:only-child,
+  .job-photos figure:first-child:nth-last-child(n + 3) {
+    grid-column: 1 / -1;
+  }
+}
