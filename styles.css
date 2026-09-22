@@ -102,6 +102,11 @@ a {
   color: var(--muted);
 }
 
+.top nav a:hover,
+.top nav a:focus-visible {
+  color: var(--accent);
+}
+
 .cta {
   display: inline-flex;
   align-items: center;
@@ -112,6 +117,25 @@ a {
   color: var(--on-accent);
   background: var(--accent);
   font-weight: 700;
+}
+
+.cta-secondary {
+  color: var(--ink);
+  background: color-mix(in srgb, var(--ink) 12%, var(--paper));
+  border: 1px solid color-mix(in srgb, var(--ink) 22%, transparent);
+}
+
+.hero .cta-secondary {
+  color: #fff;
+  background: rgb(255 255 255 / 12%);
+  border-color: rgb(255 255 255 / 28%);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 0.35rem;
 }
 
 main {
@@ -134,7 +158,7 @@ section {
   padding: 6rem 1.2rem 2.2rem;
   color: #f7f4ef;
   background:
-    linear-gradient(to top, rgb(0 0 0 / 78%), rgb(0 0 0 / 18%)),
+    linear-gradient(to top, rgb(0 0 0 / 82%), rgb(0 0 0 / 22%)),
     var(--hero) center / cover no-repeat;
 }
 
@@ -158,15 +182,16 @@ section {
 }
 
 h1 {
-  max-width: 16ch;
+  max-width: 14ch;
   font-family: var(--display);
-  font-size: clamp(2.4rem, 8vw, 5.4rem);
+  font-size: clamp(2.2rem, 7.5vw, 5rem);
   font-weight: 650;
   letter-spacing: -0.045em;
   line-height: 0.95;
 }
 
 .lede,
+.section-lede,
 #about p,
 #contact p,
 .hours,
@@ -174,6 +199,10 @@ h1 {
   max-width: 38rem;
   color: var(--muted);
   font-size: 1.05rem;
+}
+
+.section-lede {
+  margin: -0.35rem 0 1.4rem;
 }
 
 .hero .lede {
@@ -193,6 +222,7 @@ h2 {
   font-size: clamp(1.6rem, 3vw, 2.4rem);
   letter-spacing: -0.04em;
   line-height: 1;
+  text-transform: uppercase;
 }
 
 .cards {
@@ -203,13 +233,22 @@ h2 {
 
 .cards li {
   padding: 1.05rem 1.1rem;
-  border-radius: 1rem;
+  border-radius: 0.2rem;
   background: color-mix(in srgb, var(--ink) 6%, var(--paper));
+  border-left: 3px solid var(--accent);
 }
 
 .cards h3 {
+  font-family: var(--display);
   font-size: 1.05rem;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.cards p {
+  margin-top: 0.35rem;
+  color: var(--muted);
+  font-size: 0.95rem;
 }
 
 .cards p:empty {
@@ -218,14 +257,22 @@ h2 {
 
 .jobs {
   display: grid;
-  gap: 1.6rem;
+  gap: 2.4rem;
+}
+
+.job {
+  margin-inline: calc(50% - 50vw);
+  padding-inline: max(1rem, calc(50vw - 560px));
 }
 
 .job h3 {
-  margin: 0 0 0.45rem;
+  margin: 0 0 0.65rem;
+  padding-inline: max(0rem, calc(560px - 50vw + 1rem));
   font-family: var(--display), sans-serif;
-  font-size: 1.35rem;
-  letter-spacing: -0.03em;
+  font-size: clamp(1.2rem, 3vw, 1.55rem);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  text-transform: uppercase;
 }
 
 .job h3:empty,
@@ -234,7 +281,8 @@ h2 {
 }
 
 .job-note {
-  margin: 0.45rem 0 0;
+  margin: 0.65rem 0 0;
+  padding-inline: max(0rem, calc(560px - 50vw + 1rem));
   color: var(--muted);
   font-size: 0.92rem;
 }
@@ -242,7 +290,7 @@ h2 {
 .job-photos {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.4rem;
+  gap: 0.35rem;
 }
 
 .job-photos figure {
@@ -253,7 +301,7 @@ h2 {
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
-  border-radius: 0.2rem;
+  border-radius: 0;
   background: color-mix(in srgb, var(--ink) 8%, var(--paper));
 }
 
@@ -264,6 +312,36 @@ h2 {
 
 .job-photos figure:only-child img {
   aspect-ratio: 16 / 10;
+}
+
+#gallery > h2,
+#gallery > .section-lede,
+#products > h2,
+#products > .section-lede,
+#about > h2,
+#about > p,
+#contact > h2,
+#contact > p,
+#contact > .hero-actions {
+  padding-inline: 0;
+}
+
+#about p + p {
+  margin-top: 0.85rem;
+}
+
+.contact-links a {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.contact-links a:hover,
+.contact-links a:focus-visible {
+  text-decoration: underline;
+}
+
+#contact .hero-actions {
+  margin-top: 1rem;
 }
 
 .look-food #services {
@@ -342,12 +420,14 @@ footer {
   padding: 1.2rem 1.1rem 5.5rem;
   color: var(--muted);
   text-align: center;
+  font-size: 0.88rem;
 }
 
 .wa {
   position: fixed;
   right: 1rem;
   bottom: 1rem;
+  z-index: 9;
   min-height: 44px;
   padding: 0.75rem 1rem;
   border-radius: 999px;
@@ -376,5 +456,19 @@ footer {
   .job-photos figure:only-child,
   .job-photos figure:first-child:nth-last-child(n + 3) {
     grid-column: 1 / -1;
+  }
+
+  .cards li:last-child:nth-child(3n + 2) {
+    grid-column: span 1;
+  }
+}
+
+@media (min-width: 800px) {
+  .cards li:nth-child(4) {
+    grid-column: 1;
+  }
+
+  .cards li:nth-child(5) {
+    grid-column: 2;
   }
 }
