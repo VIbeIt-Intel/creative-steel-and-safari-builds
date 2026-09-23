@@ -204,7 +204,7 @@ Add-Type -TypeDefinition $cs -ReferencedAssemblies System.Drawing
 
 $enc = [System.Drawing.Imaging.ImageCodecInfo]::GetImageEncoders() | Where-Object { $_.MimeType -eq "image/jpeg" }
 $ep = New-Object System.Drawing.Imaging.EncoderParameters 1
-$ep.Param[0] = New-Object System.Drawing.Imaging.EncoderParameter ([System.Drawing.Imaging.Encoder]::Quality), ([long]93)
+$ep.Param[0] = New-Object System.Drawing.Imaging.EncoderParameter ([System.Drawing.Imaging.Encoder]::Quality), ([long]82)
 
 # r: rough search box (fraction x, y, w, h). q: optional exact quad in fractions TL,TR,BR,BL overriding detection.
 # Photos 3, 4, 8, 9, 13, 27, 37 and 51 show no readable plate (dealer stickers or out of frame).
