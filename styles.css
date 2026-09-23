@@ -619,6 +619,61 @@ body.is-cat [data-home] {
   font-size: 0.85rem;
 }
 
+.footer-vibeit {
+  display: grid;
+  justify-items: center;
+  width: fit-content;
+  margin: 2.5rem auto 0;
+  padding-top: 1.6rem;
+  border-top: 1px solid rgb(253 104 5 / 28%);
+  text-decoration: none;
+}
+
+.footer-vibeit-sign {
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+  color: #d8d2c4;
+  white-space: nowrap;
+}
+
+.footer-vibeit img {
+  width: 4.6rem;
+  height: 4.6rem;
+  margin: 0.2rem 0 0.1rem;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.footer-vibeit-cta {
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+  font-size: 1.02rem;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  background-image: linear-gradient(105deg, #c45cff 0%, #7a5cff 22%, #2ad6ff 52%, #ff9a3c 86%, #ff7a2e 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.site-foot .footer-vibeit:hover .footer-vibeit-sign {
+  color: #fff;
+}
+
+.test-strip {
+  padding: 0.4rem 1rem;
+  background: #1a1a1a;
+  color: var(--accent);
+  font-family: var(--display);
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
 .wa {
   position: fixed;
   right: 1rem;
