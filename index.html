@@ -53,7 +53,8 @@
         <img src="assets/logo.jpg" alt="Creative Steel and Safari Builds" />
         <span>Creative Steel and Safari Builds</span>
       </a>
-      <nav>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav id="site-nav">
         <a href="#makes">What we make</a>
         <a href="#workshop">Workshop</a>
         <a href="#recent">Recent builds</a>
@@ -582,9 +583,24 @@
       </section>
     </main>
 
-    <footer>
-      <p>Creative Steel and Safari Builds · Shere, Pretoria East · South Africa</p>
-      <p>Reg. 2026/205386/07</p>
+    <footer class="site-foot">
+      <div class="foot-grid">
+        <div>
+          <p class="foot-name">Creative Steel and Safari Builds</p>
+          <p>Steel for 4×4s. Built in Shere since 1995.</p>
+        </div>
+        <div>
+          <p class="foot-label">Workshop</p>
+          <p><a href="https://www.google.com/maps/search/?api=1&amp;query=69+Graham+Rd,+Shere,+Pretoria+East">69 Graham Rd, Shere, Pretoria East</a></p>
+        </div>
+        <div>
+          <p class="foot-label">Talk to us</p>
+          <p><a href="tel:+27787031151">078 703 1151</a></p>
+          <p><a href="https://wa.me/27787031151">WhatsApp</a></p>
+          <p><a href="mailto:vjornv@gmail.com">vjornv@gmail.com</a></p>
+        </div>
+      </div>
+      <p class="foot-reg">Reg. 2026/205386/07</p>
     </footer>
 
     <a class="wa" href="https://wa.me/27787031151">WhatsApp</a>
@@ -663,6 +679,21 @@
 
         window.addEventListener("hashchange", route);
         route();
+
+        var menuBtn = document.querySelector(".menu-btn");
+        var header = document.querySelector(".top");
+        menuBtn.addEventListener("click", function () {
+          var open = header.classList.toggle("is-open");
+          menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+          menuBtn.textContent = open ? "Close" : "Menu";
+        });
+        header.querySelectorAll("nav a").forEach(function (link) {
+          link.addEventListener("click", function () {
+            header.classList.remove("is-open");
+            menuBtn.setAttribute("aria-expanded", "false");
+            menuBtn.textContent = "Menu";
+          });
+        });
 
         document.querySelectorAll(".job").forEach(function (job) {
           var title = job.querySelector("h3").textContent.trim();
