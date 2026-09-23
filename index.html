@@ -715,6 +715,21 @@
           link.href = "https://wa.me/27787031151?text=" + encodeURIComponent("Hi, I want to ask about the " + title);
         });
 
+        var pill = document.querySelector(".wa");
+        if (pill && "IntersectionObserver" in window) {
+          var inView = new Set();
+          var watch = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) inView.add(entry.target);
+              else inView.delete(entry.target);
+            });
+            pill.classList.toggle("is-tucked", inView.size > 0);
+          });
+          document.querySelectorAll('a[href^="https://wa.me"]:not(.wa), .site-foot').forEach(function (el) {
+            watch.observe(el);
+          });
+        }
+
         var box = document.getElementById("lightbox");
         var full = box.querySelector("img");
         document.querySelectorAll(".shot").forEach(function (shot) {

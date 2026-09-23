@@ -694,6 +694,51 @@ body.is-cat [data-home] {
   }
 }
 
+@media (max-width: 767px) {
+  html {
+    scroll-padding-top: 4.8rem;
+  }
+
+  section,
+  .job {
+    scroll-margin-top: 0;
+  }
+
+  .top {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.3rem 0.9rem;
+  }
+
+  .brand img {
+    height: 3.5rem;
+    max-width: 44vw;
+  }
+
+  .menu-btn {
+    margin-left: auto;
+    padding: 0 0.75rem;
+  }
+
+  .top > .cta {
+    padding: 0 1rem;
+  }
+
+  .wa {
+    right: 0.75rem;
+    bottom: calc(0.75rem + env(safe-area-inset-bottom));
+    padding: 0.55rem 0.9rem;
+    font-size: 0.92rem;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  .wa.is-tucked {
+    opacity: 0;
+    transform: translateY(1rem);
+    pointer-events: none;
+  }
+}
+
 @media (min-width: 700px) {
   .foot-grid {
     grid-template-columns: 1.4fr 1fr 1fr;
