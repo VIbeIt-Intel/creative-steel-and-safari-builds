@@ -677,6 +677,10 @@ body.is-cat [data-home] {
   box-shadow: 0 4px 16px rgb(0 0 0 / 35%);
 }
 
+.wa svg {
+  display: none;
+}
+
 @media (max-width: 520px) {
   .hero-actions .cta {
     flex: 1 1 100%;
@@ -713,12 +717,52 @@ body.is-cat [data-home] {
     padding: 0 1rem;
   }
 
+  .make-card,
+  .recent a,
+  section {
+    padding-bottom: calc(52px + 0.75rem + env(safe-area-inset-bottom));
+  }
+
+  .section-head p,
+  .workshop-copy,
+  .lede,
+  .recent span {
+    padding-right: calc(52px + 0.75rem);
+  }
+
+  .site-foot {
+    padding-bottom: calc(6.5rem + env(safe-area-inset-bottom));
+  }
+
   .wa {
     right: 0.75rem;
     bottom: calc(0.75rem + env(safe-area-inset-bottom));
-    padding: 0.55rem 0.9rem;
-    font-size: 0.92rem;
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    min-height: 52px;
+    padding: 0;
+    border-radius: 50%;
     transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  .wa span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .wa svg {
+    display: block;
+    width: 28px;
+    height: 28px;
   }
 
   .wa.is-tucked {
