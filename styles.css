@@ -663,17 +663,6 @@ body.is-cat [data-home] {
   color: #fff;
 }
 
-.test-strip {
-  padding: 0.4rem 1rem;
-  background: #1a1a1a;
-  color: var(--accent);
-  font-family: var(--display);
-  font-size: 0.8rem;
-  letter-spacing: 0.12em;
-  text-align: center;
-  text-transform: uppercase;
-}
-
 .wa {
   position: fixed;
   right: 1rem;
