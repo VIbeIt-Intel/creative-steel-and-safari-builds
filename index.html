@@ -120,7 +120,7 @@
       <section id="makes" data-home>
         <div class="section-head">
           <h2>What we make</h2>
-          <p>Five kinds of steelwork. Open a category to see that work only.</p>
+          <p id="makes-lead">Five kinds of steelwork. Open a category to see that work only.</p>
         </div>
         <ul class="makes">
           <li>
@@ -635,14 +635,15 @@
 
     <script>
       (function () {
-        var cats = ["cattle", "viewers", "bars", "steps", "pipe"];
         var root = document.querySelector("[data-rotator]");
-        var slides = Array.prototype.slice.call(root.querySelectorAll(".slide"));
-        var dots = Array.prototype.slice.call(root.querySelectorAll(".dot"));
         var index = 0;
         var timer;
+        var rotatorAbort = null;
 
         function show(n) {
+          var slides = Array.prototype.slice.call(root.querySelectorAll(".slide"));
+          var dots = Array.prototype.slice.call(root.querySelectorAll(".dot"));
+          if (!slides.length) return;
           index = (n + slides.length) % slides.length;
           slides.forEach(function (slide, i) {
             slide.classList.toggle("is-on", i === index);
@@ -659,26 +660,39 @@
         function play() {
           stop();
           if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+          if (root.querySelectorAll(".slide").length < 2) return;
           timer = setInterval(function () { show(index + 1); }, 5500);
         }
 
-        root.addEventListener("mouseenter", stop);
-        root.addEventListener("mouseleave", play);
-        root.addEventListener("focusin", stop);
-        root.addEventListener("focusout", play);
-        root.querySelector(".rot-prev").addEventListener("click", function () { show(index - 1); play(); });
-        root.querySelector(".rot-next").addEventListener("click", function () { show(index + 1); play(); });
-        dots.forEach(function (dot, i) {
-          dot.addEventListener("click", function () { show(i); play(); });
-        });
-        show(0);
-        play();
+        function bindRotator() {
+          if (rotatorAbort) rotatorAbort.abort();
+          rotatorAbort = new AbortController();
+          var signal = rotatorAbort.signal;
+          stop();
+          index = 0;
+          root.addEventListener("mouseenter", stop, { signal: signal });
+          root.addEventListener("mouseleave", play, { signal: signal });
+          root.addEventListener("focusin", stop, { signal: signal });
+          root.addEventListener("focusout", play, { signal: signal });
+          var prev = root.querySelector(".rot-prev");
+          var next = root.querySelector(".rot-next");
+          if (prev) prev.addEventListener("click", function () { show(index - 1); play(); }, { signal: signal });
+          if (next) next.addEventListener("click", function () { show(index + 1); play(); }, { signal: signal });
+          Array.prototype.forEach.call(root.querySelectorAll(".dot"), function (dot, i) {
+            dot.addEventListener("click", function () { show(i); play(); }, { signal: signal });
+          });
+          show(0);
+          play();
+        }
+        bindRotator();
+        window.CSBindRotator = bindRotator;
 
         function catFromHash() {
           var raw = (location.hash || "").replace("#", "");
           var found = "";
-          cats.forEach(function (cat) {
-            if (raw === cat || raw.indexOf(cat + "-") === 0) found = cat;
+          document.querySelectorAll(".cat-page").forEach(function (page) {
+            var cat = page.id;
+            if ((raw === cat || raw.indexOf(cat + "-") === 0) && cat.length > found.length) found = cat;
           });
           return found;
         }
@@ -701,6 +715,7 @@
         }
 
         window.addEventListener("hashchange", route);
+        window.CSRoute = route;
         route();
 
         var menuBtn = document.querySelector(".menu-btn");
@@ -742,13 +757,13 @@
 
         var box = document.getElementById("lightbox");
         var full = box.querySelector("img");
-        document.querySelectorAll(".shot").forEach(function (shot) {
-          shot.addEventListener("click", function () {
-            var img = shot.querySelector("img");
-            full.src = shot.getAttribute("data-full");
-            full.alt = img ? img.alt : "";
-            box.hidden = false;
-          });
+        document.addEventListener("click", function (event) {
+          var shot = event.target.closest ? event.target.closest(".shot") : null;
+          if (!shot) return;
+          var img = shot.querySelector("img");
+          full.src = shot.getAttribute("data-full");
+          full.alt = img ? img.alt : "";
+          box.hidden = false;
         });
         function closeLight() {
           box.hidden = true;
@@ -762,5 +777,6 @@
         });
       })();
     </script>
+    <script src="site-live.js"></script>
   </body>
 </html>

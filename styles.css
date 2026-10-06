@@ -751,6 +751,10 @@ body.is-cat [data-home] {
     padding-bottom: calc(4.75rem + env(safe-area-inset-bottom));
   }
 
+  .dots {
+    right: calc(52px + 1.5rem);
+  }
+
   .wa {
     right: 0.75rem;
     bottom: calc(0.75rem + env(safe-area-inset-bottom));
