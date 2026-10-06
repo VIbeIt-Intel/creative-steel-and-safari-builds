@@ -58,6 +58,13 @@
       });
     });
     recent.sort(function (a, b) { return a.recentSort - b.recentSort; });
+    var workshopBox = document.querySelector(".workshop-photos");
+    if (workshopBox && Array.isArray(data.workshop)) {
+      workshopBox.innerHTML = data.workshop.map(function (photo) {
+        return "<img src=\"" + esc(photo.sm) + "\" alt=\"" + esc(photo.alt || "Workshop") + "\" loading=\"lazy\" decoding=\"async\">";
+      }).join("");
+    }
+
     document.querySelector(".recent").innerHTML = recent.map(function (build) {
       var photo = build.photos[0];
       return (
