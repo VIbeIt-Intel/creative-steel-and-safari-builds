@@ -113,7 +113,8 @@
       return card.getAttribute("data-frames").split("|").length > 1;
     });
     if (!cards.length || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    var handles = [];
+    var timer = 0;
+    var cursor = 0;
     var watch = null;
     function step(card) {
       if (document.hidden || !card.isConnected) return;
@@ -149,13 +150,12 @@
       preload.src = frames[next];
     }
     function start() {
-      if (handles.length) return;
-      cards.forEach(function (card, index) {
-        handles.push(window.setTimeout(function () {
-          step(card);
-          handles.push(window.setInterval(function () { step(card); }, 4000));
-        }, 500 + index * 320));
-      });
+      if (timer) return;
+      timer = window.setInterval(function () {
+        var card = cards[cursor % cards.length];
+        cursor += 1;
+        step(card);
+      }, 3000);
     }
     var box = document.querySelector(".recent");
     if (box && "IntersectionObserver" in window) {
@@ -169,11 +169,8 @@
       start();
     }
     window.CSRecentStop = function () {
-      handles.forEach(function (id) {
-        window.clearTimeout(id);
-        window.clearInterval(id);
-      });
-      handles = [];
+      if (timer) window.clearInterval(timer);
+      timer = 0;
       if (watch) watch.disconnect();
       watch = null;
     };
