@@ -153,7 +153,7 @@
       cards.forEach(function (card, index) {
         handles.push(window.setTimeout(function () {
           step(card);
-          handles.push(window.setInterval(function () { step(card); }, 2800));
+          handles.push(window.setInterval(function () { step(card); }, 4000));
         }, 500 + index * 320));
       });
     }
