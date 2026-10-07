@@ -435,6 +435,7 @@ h2 {
   object-fit: cover;
   object-position: center;
   background: #111;
+  transition: opacity 0.35s ease;
 }
 
 .recent span {

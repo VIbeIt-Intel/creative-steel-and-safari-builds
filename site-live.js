@@ -67,12 +67,14 @@
 
     document.querySelector(".recent").innerHTML = recent.map(function (build) {
       var photo = build.photos[0];
+      var frames = build.photos.map(function (item) { return item.sm; }).join("|");
       return (
-        "<a href=\"#" + esc(build.id) + "\">" +
-        "<img src=\"" + esc(photo.sm) + "\" alt=\"" + esc(photo.alt || build.title) + "\" loading=\"lazy\" decoding=\"async\">" +
+        "<a href=\"#" + esc(build.id) + "\" data-frames=\"" + esc(frames) + "\" data-at=\"0\">" +
+        "<img src=\"" + esc(photo.sm) + "\" alt=\"" + esc(build.title) + "\" loading=\"lazy\" decoding=\"async\">" +
         "<span>" + esc(build.title) + "</span></a>"
       );
     }).join("");
+    cycleRecent();
 
     document.querySelectorAll(".cat-page").forEach(function (page) { page.remove(); });
     var main = document.querySelector("main");
@@ -103,6 +105,61 @@
 
     if (window.CSBindRotator) window.CSBindRotator();
     if (window.CSRoute) window.CSRoute();
+  }
+
+  function cycleRecent() {
+    if (window.CSRecentStop) window.CSRecentStop();
+    var cards = Array.prototype.filter.call(document.querySelectorAll(".recent a[data-frames]"), function (card) {
+      return card.getAttribute("data-frames").split("|").length > 1;
+    });
+    if (!cards.length || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    var timer = 0;
+    var cursor = 0;
+    var watch = null;
+    function step() {
+      if (document.hidden) return;
+      var card = cards[cursor % cards.length];
+      cursor += 1;
+      if (!card.isConnected) return;
+      var frames = card.getAttribute("data-frames").split("|");
+      var at = Number(card.getAttribute("data-at") || "0");
+      var next = (at + 1) % frames.length;
+      var img = card.querySelector("img");
+      var preload = new Image();
+      preload.decoding = "async";
+      preload.onload = function () {
+        if (!card.isConnected) return;
+        img.style.opacity = "0";
+        window.setTimeout(function () {
+          if (!card.isConnected) return;
+          img.src = frames[next];
+          card.setAttribute("data-at", String(next));
+          img.style.opacity = "1";
+        }, 160);
+      };
+      preload.src = frames[next];
+    }
+    function start() {
+      if (timer) return;
+      timer = window.setInterval(step, 3200);
+    }
+    var box = document.querySelector(".recent");
+    if (box && "IntersectionObserver" in window) {
+      watch = new IntersectionObserver(function (entries) {
+        if (!entries.some(function (entry) { return entry.isIntersecting; })) return;
+        start();
+        if (watch) watch.disconnect();
+      }, { rootMargin: "240px" });
+      watch.observe(box);
+    } else {
+      start();
+    }
+    window.CSRecentStop = function () {
+      if (timer) window.clearInterval(timer);
+      if (watch) watch.disconnect();
+      timer = 0;
+      watch = null;
+    };
   }
 
   fetch(STUDIO_API + "/api/site", { cache: "no-store" })
