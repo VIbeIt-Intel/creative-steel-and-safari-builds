@@ -70,7 +70,7 @@
       var frames = build.photos.map(function (item) { return item.sm; }).join("|");
       return (
         "<a href=\"#" + esc(build.id) + "\" data-frames=\"" + esc(frames) + "\" data-at=\"0\">" +
-        "<img src=\"" + esc(photo.sm) + "\" alt=\"" + esc(build.title) + "\" loading=\"lazy\" decoding=\"async\">" +
+        "<span class=\"recent-frame\"><img src=\"" + esc(photo.sm) + "\" alt=\"" + esc(build.title) + "\" loading=\"lazy\" decoding=\"async\"><img class=\"incoming\" alt=\"\"></span>" +
         "<span>" + esc(build.title) + "</span></a>"
       );
     }).join("");
@@ -124,24 +124,37 @@
       var frames = card.getAttribute("data-frames").split("|");
       var at = Number(card.getAttribute("data-at") || "0");
       var next = (at + 1) % frames.length;
-      var img = card.querySelector("img");
+      var base = card.querySelector(".recent-frame img");
+      var incoming = card.querySelector(".incoming");
+      if (!base || !incoming || incoming.classList.contains("show")) return;
       var preload = new Image();
       preload.decoding = "async";
       preload.onload = function () {
         if (!card.isConnected) return;
-        img.style.opacity = "0";
-        window.setTimeout(function () {
+        incoming.src = frames[next];
+        window.requestAnimationFrame(function () {
+          window.requestAnimationFrame(function () {
+            if (!card.isConnected) return;
+            incoming.classList.add("show");
+          });
+        });
+        var finish = function () {
+          incoming.removeEventListener("transitionend", finish);
           if (!card.isConnected) return;
-          img.src = frames[next];
+          base.src = frames[next];
           card.setAttribute("data-at", String(next));
-          img.style.opacity = "1";
-        }, 160);
+          incoming.style.transition = "none";
+          incoming.classList.remove("show");
+          void incoming.offsetWidth;
+          incoming.style.transition = "";
+        };
+        incoming.addEventListener("transitionend", finish);
       };
       preload.src = frames[next];
     }
     function start() {
       if (timer) return;
-      timer = window.setInterval(step, 3200);
+      timer = window.setInterval(step, 5200);
     }
     var box = document.querySelector(".recent");
     if (box && "IntersectionObserver" in window) {
