@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://vibeit-intel.github.io/creative-steel-and-safari-builds/sitemap.xml
+Sitemap: https://steelandsafari.co.za/sitemap.xml
