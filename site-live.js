@@ -20,31 +20,50 @@
     return "https://wa.me/27787031151?text=" + encodeURIComponent("Hi, I want to ask about the " + title);
   }
 
+  function coverFor(product) {
+    if (product.cover) return { src: product.cover, alt: product.coverAlt || product.name };
+    var builds = product.builds || [];
+    for (var i = 0; i < builds.length; i += 1) {
+      var photos = builds[i].photos || [];
+      if (photos[0] && photos[0].sm) return { src: photos[0].sm, alt: photos[0].alt || product.name };
+    }
+    return null;
+  }
+
   function render(data) {
     var products = data.products || [];
     if (!products.length) return;
     var root = document.querySelector("[data-rotator]");
-    var slides = products.map(function (product, index) {
-      return (
+    var slides = [];
+    var dots = [];
+    products.forEach(function (product) {
+      var cover = coverFor(product);
+      if (!cover || !cover.src) return;
+      var index = slides.length;
+      slides.push(
         "<figure class=\"slide" + (index === 0 ? " is-on" : "") + "\">" +
-        "<img src=\"" + esc(product.cover) + "\" alt=\"" + esc(product.coverAlt || product.name) + "\"" + (index === 0 ? " fetchpriority=\"high\"" : " decoding=\"async\"") + ">" +
+        "<img src=\"" + esc(cover.src) + "\" alt=\"" + esc(cover.alt || product.name) + "\"" + (index === 0 ? " fetchpriority=\"high\"" : " decoding=\"async\"") + ">" +
         "<figcaption>" + esc(product.wheelLabel || product.name) + "</figcaption></figure>"
       );
-    }).join("");
-    var dots = products.map(function (product, index) {
-      return "<button class=\"dot" + (index === 0 ? " is-on" : "") + "\" type=\"button\" aria-label=\"" + esc(product.wheelLabel || product.name) + "\"></button>";
-    }).join("");
-    root.innerHTML =
-      slides +
-      "<button class=\"rot-prev\" type=\"button\" aria-label=\"Previous slide\">‹</button>" +
-      "<button class=\"rot-next\" type=\"button\" aria-label=\"Next slide\">›</button>" +
-      "<div class=\"dots\" role=\"tablist\" aria-label=\"Product photos\">" + dots + "</div>";
+      dots.push("<button class=\"dot" + (index === 0 ? " is-on" : "") + "\" type=\"button\" aria-label=\"" + esc(product.wheelLabel || product.name) + "\"></button>");
+    });
+    if (root && slides.length) {
+      root.innerHTML =
+        slides.join("") +
+        "<button class=\"rot-prev\" type=\"button\" aria-label=\"Previous slide\">‹</button>" +
+        "<button class=\"rot-next\" type=\"button\" aria-label=\"Next slide\">›</button>" +
+        "<div class=\"dots\" role=\"tablist\" aria-label=\"Product photos\">" + dots.join("") + "</div>";
+    }
 
     var makes = document.querySelector(".makes");
     makes.innerHTML = products.map(function (product) {
+      var cover = coverFor(product);
+      var photo = cover && cover.src
+        ? "<img src=\"" + esc(cover.src) + "\" alt=\"" + esc(cover.alt || product.name) + "\" loading=\"lazy\" decoding=\"async\">"
+        : "";
       return (
         "<li><a class=\"make-card\" href=\"#" + esc(product.id) + "\">" +
-        "<img src=\"" + esc(product.cover) + "\" alt=\"" + esc(product.coverAlt || product.name) + "\" loading=\"lazy\" decoding=\"async\">" +
+        photo +
         "<h3>" + esc(product.name) + "</h3><p>" + esc(product.blurb) + "</p></a></li>"
       );
     }).join("");
@@ -61,6 +80,7 @@
     var workshopBox = document.querySelector(".workshop-photos");
     if (workshopBox && Array.isArray(data.workshop)) {
       workshopBox.innerHTML = data.workshop.map(function (photo) {
+        if (!photo.sm) return "";
         return "<img src=\"" + esc(photo.sm) + "\" alt=\"" + esc(photo.alt || "Workshop") + "\" loading=\"lazy\" decoding=\"async\">";
       }).join("");
     }
