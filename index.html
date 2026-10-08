@@ -727,11 +727,25 @@
           if (cat && raw !== cat) {
             var job = document.getElementById(raw);
             if (job) {
-              requestAnimationFrame(function () {
-                job.scrollIntoView({ block: "start" });
-              });
+              requestAnimationFrame(function () { scrollToHashTarget(job); });
+            }
+          } else if (raw && raw !== "top") {
+            var section = document.getElementById(raw);
+            if (section) {
+              requestAnimationFrame(function () { scrollToHashTarget(section); });
             }
           }
+        }
+
+        function scrollToHashTarget(target) {
+          var header = document.querySelector(".top");
+          var offset = header ? header.getBoundingClientRect().height : 0;
+          var top = Math.max(0, target.getBoundingClientRect().top + window.pageYOffset - offset);
+          var root = document.documentElement;
+          var previous = root.style.scrollBehavior;
+          root.style.scrollBehavior = "auto";
+          window.scrollTo(0, top);
+          root.style.scrollBehavior = previous;
         }
 
         window.addEventListener("hashchange", route);
