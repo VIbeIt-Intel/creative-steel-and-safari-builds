@@ -68,7 +68,7 @@
       );
     }).join("");
     var lead = document.getElementById("makes-lead");
-    if (lead) lead.textContent = kindsLine(products.length);
+    if (lead) lead.textContent = kindsLine(makes.querySelectorAll(".make-card").length);
 
     var recent = [];
     products.forEach(function (product) {

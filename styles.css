@@ -197,8 +197,16 @@ section {
 }
 
 .miss {
-  padding-top: 1.5rem;
-  min-height: 60vh;
+  padding-top: 2.2rem;
+  min-height: 46vh;
+}
+
+.miss h1 {
+  margin-bottom: 0.85rem;
+}
+
+.miss .lede {
+  margin-bottom: 1.6rem;
 }
 
 .section-head {
@@ -822,7 +830,6 @@ body.is-cat [data-home] {
     padding: 0 1rem;
   }
 
-  .make-card,
   .recent a,
   section {
     padding-bottom: calc(52px + 0.75rem + env(safe-area-inset-bottom));
